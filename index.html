@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Resort & Marine Group | Watersports Guest Experience</title>
+    
+    <!-- Google Fonts: Inter and Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS RESET & VARIABLES */
+        :root {
+            --bg-dark: #0a1628;
+            --bg-dark-trans: rgba(10, 22, 40, 0.95);
+            --text-light: #ffffff;
+            --text-muted: #a0aec0;
+            --accent-gold: #c9a84c;
+            --accent-gold-hover: #e0be63;
+            --font-heading: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* TYPOGRAPHY */
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--accent-gold);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* SCROLL ANIMATION INFRASTRUCTURE */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition-smooth);
+            transition-duration: 1s;
+        }
+
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* INTERACTIVE BUTTONS */
+        .cta-btn {
+            display: inline-block;
+            background-color: var(--accent-gold);
+            color: var(--bg-dark);
+            text-decoration: none;
+            padding: 0.9rem 2rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: 1px solid var(--accent-gold);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .cta-btn:hover {
+            background-color: transparent;
+            color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(201, 168, 76, 0.3);
+        }
+
+        /* FIXED NAVIGATION BAR */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition-smooth);
+        }
+
+        header.scrolled {
+            background-color: var(--bg-dark-trans);
+            padding: 1rem 4%;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            color: var(--text-light);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        .logo span {
+            color: var(--accent-gold);
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+        }
+
+        nav a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* REUSABLE LAYOUT STRUCTURES */
+        section {
+            padding: 8rem 8% 6rem 8%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.05);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-gold);
+            margin: 1rem auto 0 auto;
+        }
+
+        /* SECTION 1: HERO */
+        #hero {
+            background: linear-gradient(135deg, #060d18 0%, #0a1628 50%, #11243f 100%);
+            padding-top: 0;
+            padding-bottom: 0;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #hero::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            opacity: 0.06;
+            background: radial-gradient(circle at 50% 50%, transparent 50%, var(--accent-gold) 52%, transparent 55%),
+                        radial-gradient(circle at 0% 0%, transparent 40%, var(--accent-gold) 42%, transparent 45%);
+            background-size: 180px 180px;
+            animation: waveMotion 60s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes waveMotion {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            max-width: 850px;
+            z-index: 10;
+        }
+
+        #hero h1 {
+            font-size: 3.8rem;
+            color: var(--text-light);
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+        }
+
+        #hero h1 span {
+            color: var(--accent-gold);
+            display: block;
+            font-size: 1rem;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        #hero p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        /* SECTION 2: WHAT WE DO */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 3rem 2rem;
+            border: 1px solid rgba(201, 168, 76, 0.08);
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-gold);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .icon-divider {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-divider::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--accent-gold);
+            transform: rotate(45deg);
+        }
+
+        .icon-divider::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-gold);
+            border-radius: 50%;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* SECTION 3: ABOUT */
+        .about-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-container p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .about-quote {
+            font-family: var(--font-heading);
+            font-style: italic;
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+            margin-top: 2.5rem;
+            border-top: 1px solid rgba(201, 168, 76, 0.2);
+            padding-top: 1.5rem;
+        }
+
+        /* SECTION 4: THE AUDIT */
+        .audit-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, rgba(255,255,255,0.01) 0%, rgba(201,168,76,0.03) 100%);
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            padding: 4rem;
+            text-align: center;
+        }
+
+        .price-tag {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .price-tag span {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: block;
+        }
+
+        .audit-details {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .availability-badge {
+            display: inline-block;
+            border: 1px solid var(--accent-gold);
+            padding: 0.4rem 1.2rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2.5rem;
+            color: var(--accent-gold);
+            background-color: rgba(201, 168, 76, 0.05);
+        }
+
+        /* SECTION 5: CONTACT & FOOTER */
+        .contact-container {
+            max-width: 700px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .form-group-full {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        input, textarea {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            padding: 1rem;
+            color: var(--text-light);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            background-color: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 10px rgba(201, 168, 76, 0.1);
+        }
+
+        form .cta-btn {
+            grid-column: span 2;
+            justify-self: center;
+            margin-top: 1rem;
+            width: auto;
+            min-width: 200px;
+        }
+
+        .contact-meta {
+            text-align: center;
+            border-top: 1px solid rgba(201, 168, 76, 0.1);
+            padding-top: 2.5rem;
+        }
+
+        .contact-meta p {
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-meta a {
+            color: var(--accent-gold);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .contact-meta a:hover {
+            color: var(--text-light);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            background-color: #050b14;
+            border-top: 1px solid rgba(201, 168, 76, 0.05);
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* MOBILE RESPONSIVE MEDIA QUERIES */
+        @media (max-width: 1024px) {
+            #hero h1 { font-size: 3rem; }
+            .services-grid { grid-template-columns: 1fr; gap: 2rem; }
+            section { padding: 6rem 6% 4rem 6%; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 1.2rem 5%; }
+            header.scrolled { padding: 1rem 5%; }
+            nav { display: none; }
+            #hero h1 { font-size: 2.4rem; }
+            #hero p { font-size: 1.1rem; }
+            .audit-container { padding: 2.5rem 1.5rem; }
+            form { grid-template-columns: 1fr; }
+            .form-group-full { grid-column: span 1; }
+            form .cta-btn { grid-column: span 1; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="navbar">
+        <a href="#hero" class="logo">The Resort <span>&</span> Marine Group</a>
+        <nav>
+            <a href="#what-we-do">What We Do</a>
+            <a href="#about">About</a>
+            <a href="#audit">The Audit</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <div class="hero-content">
+            <h1>
+                <span>The Resort &amp; Marine Group</span>
+                Your Guests Deserve Better on the Water.
+            </h1>
+            <p>We audit resort watersports operations and identify exactly where the guest experience is falling short — then help you fix it.</p>
+            <a href="#contact" class="cta-btn">Request an Audit</a>
+        </div>
+    </section>
+
+    <section id="what-we-do" class="fade-in-section">
+        <h2 class="section-title">What We Do</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="icon-divider"></div>
+                <h3>On-Site Audit</h3>
+                <p>We spend 2-3 days at your property as a guest, assessing your watersports operation from the guest perspective. You receive a detailed report covering equipment, instruction quality, safety briefings, and the overall experience arc.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon-divider"></div>
+                <h3>Fleet Advisory</h3>
+                <p>If your kit is holding your guests back, we'll tell you exactly what to change and why. We supply performance SUP, wing foil, and foil boards directly to resort properties through our equipment division.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon-divider"></div>
+                <h3>Experience Design</h3>
+                <p>From how guests are briefed to how sessions are structured, small changes in delivery make a measurable difference to satisfaction scores and repeat bookings.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="fade-in-section">
+        <h2 class="section-title">Who We Are</h2>
+        <div class="about-container">
+            <p>The Resort &amp; Marine Group is led by an experienced UK watersports operator with over a decade running a specialist board brand and working across coastal and resort environments. We've been on the water in the conditions your guests face — and we know the difference between kit and instruction that genuinely works and kit that looks fine until someone has to actually use it.</p>
+            <p>We work with a small number of resort clients per season to keep the quality of our work high.</p>
+            <div class="about-quote">"We've run kit in the conditions your guests face. We know what works and what doesn't."</div>
+        </div>
+    </section>
+
+    <section id="audit" class="fade-in-section">
+        <h2 class="section-title">What an Audit Costs and What You Get</h2>
+        <div class="audit-container">
+            <div class="price-tag">£1,500<span>Consultancy Fee Per Property</span></div>
+            <div class="audit-details">
+                <p>Includes 2-3 days on-site assessment, a full written report, and a follow-up call to walk through findings and next steps. Travel and accommodation are covered by the property — we're there as your guest, which is exactly how the audit works best.</p>
+                <p style="margin-top: 1.5rem; font-size: 0.95rem;">For properties within the same region or group, we're happy to discuss arrangements that work across multiple sites in a single visit — get in touch to talk through what makes sense.</p>
+            </div>
+            <div class="availability-badge">Limited audit slots available for the 2027 season</div>
+            <p style="margin-bottom: 2rem; color: var(--text-muted);">Properties serious about improving their watersports offering should enquire early.</p>
+            <a href="#contact" class="cta-btn">Enquire Now</a>
+        </div>
+    </section>
+
+    <section id="contact" class="fade-in-section">
+        <h2 class="section-title">Connect With Us</h2>
+        <div class="contact-container">
+            <!-- REPLACE ACTION URL WITH YOUR FORMSPREE ENDPOINT e.g. https://formspree.io/f/xxxxxxxx -->
+            <form action="YOUR_FORMSPREE_ACTION_URL_HERE" method="POST">
+                <div>
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required placeholder="e.g. Alexander Vance">
+                </div>
+                <div>
+                    <label for="property">Property Name</label>
+                    <input type="text" id="property" name="property" required placeholder="e.g. Horizon Blue Resort">
+                </div>
+                <div>
+                    <label for="role">Your Role</label>
+                    <input type="text" id="role" name="role" required placeholder="e.g. General Manager">
+                </div>
+                <div>
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="e.g. name@property.com">
+                </div>
+                <div class="form-group-full">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="6" required placeholder="Tell us briefly about your current operations and what you're looking to improve..."></textarea>
+                </div>
+                <button type="submit" class="cta-btn">Submit Enquiry</button>
+            </form>
+
+            <div class="contact-meta">
+                <p>Direct enquiries: <a href="mailto:contact@theresortandmarinegroup.co.uk">contact@theresortandmarinegroup.co.uk</a></p>
+                <p>Connect on: <a href="LINKEDIN_URL_HERE" target="_blank" rel="noopener">LinkedIn</a></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; <script>document.write(new Date().getFullYear())</script> TRMGB Limited trading as The Resort &amp; Marine Group</p>
+    </footer>
+
+    <script>
+        // Navbar scroll behaviour
+        const header = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Fade-in on scroll
+        const sections = document.querySelectorAll('.fade-in-section');
+        const observerOptions = {
+            root: null,
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+</body>
+</html>
